@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // update to backend URL
+  baseURL: process.env.REACT_APP_API_URL || '/api', // update to backend URL
 });
 
 export const fetchNotes = () => API.get('/notes');
