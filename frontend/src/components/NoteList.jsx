@@ -23,7 +23,7 @@ const NoteList = ({ notes, onView, onDelete }) => {
           <h3>{typeof note.title === 'object' ? JSON.stringify(note.title) : note.title}</h3>
           <p>{typeof note.content === 'object' ? JSON.stringify(note.content) : note.content}</p>
           {note.tags && note.tags.length > 0 && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.5rem', marginBottom: '0.5rem', flexShrink: 0 }}>
               {note.tags.map((tag, index) => {
                 const tagText = typeof tag === 'object' ? (tag.name || JSON.stringify(tag)) : tag;
                 if (!tagText || tagText === '{}') return null;
@@ -35,7 +35,7 @@ const NoteList = ({ notes, onView, onDelete }) => {
               })}
             </div>
           )}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', flexShrink: 0 }}>
             <span className="date">{new Date(note.createdAt).toLocaleDateString()}</span>
             <button
               className="btn danger outline"
