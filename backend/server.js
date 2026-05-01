@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/smartnotes';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://studynotion56_db_user:ypCCDEc3yEMwwcSd@cluster0.hrmohgq.mongodb.net/smartnotes';
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI)
