@@ -2,7 +2,7 @@ import React from 'react';
 import { FiTrash2, FiTag } from 'react-icons/fi';
 
 const NoteList = ({ notes, onView, onDelete }) => {
-  if (notes.length === 0) {
+  if (!Array.isArray(notes) || notes.length === 0) {
     return (
       <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-secondary)' }}>
         <h2>No notes yet!</h2>

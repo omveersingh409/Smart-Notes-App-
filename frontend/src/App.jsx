@@ -17,9 +17,15 @@ function App() {
   const loadNotes = async () => {
     try {
       const { data } = await fetchNotes();
-      setNotes(data);
+      if (Array.isArray(data)) {
+        setNotes(data);
+      } else {
+        console.error('Expected array, received:', data);
+        setNotes([]);
+      }
     } catch (error) {
       console.error('Error fetching notes', error);
+      setNotes([]);
     }
   };
 
