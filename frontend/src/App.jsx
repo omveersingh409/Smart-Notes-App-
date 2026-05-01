@@ -53,7 +53,10 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        <h1><FiCpu /> Smart Notes</h1>
+        <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <FiCpu style={{ color: '#818cf8' }} />
+          <span className="gradient-text">Smart Notes</span>
+        </h1>
         {currentView !== 'editor' && (
           <button className="btn" onClick={handleCreateNew}>
             <FiPlus /> New Note
