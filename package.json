@@ -11,5 +11,13 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "keyword-extractor": "^0.0.28",
+    "mongoose": "^9.6.1",
+    "node-summarizer": "^1.0.7"
   }
 }
