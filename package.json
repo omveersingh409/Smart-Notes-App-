@@ -2,7 +2,9 @@
   "name": "smart-notes-app",
   "version": "1.0.0",
   "scripts": {
-    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install --legacy-peer-deps",
+    "build": "npm run install:all && cd frontend && npm run build",
+    "start": "cd backend && npm start",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm start"
