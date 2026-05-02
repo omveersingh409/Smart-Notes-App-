@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchNotes, deleteNote } from './api';
-import { FiPlus, FiCpu } from 'react-icons/fi';
+import { FiPlus, FiCpu, FiSearch } from 'react-icons/fi';
 import NoteList from './components/NoteList';
 import NoteEditor from './components/NoteEditor';
 import NoteViewer from './components/NoteViewer';
@@ -9,6 +9,19 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [currentView, setCurrentView] = useState('list'); // 'list', 'editor', 'viewer'
   const [selectedNote, setSelectedNote] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredNotes = notes.filter(note => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    const titleMatch = typeof note.title === 'string' && note.title.toLowerCase().includes(query);
+    const contentMatch = typeof note.content === 'string' && note.content.toLowerCase().includes(query);
+    const tagMatch = note.tags && note.tags.some(tag => 
+      (typeof tag === 'string' && tag.toLowerCase().includes(query)) || 
+      (typeof tag === 'object' && tag.name && tag.name.toLowerCase().includes(query))
+    );
+    return titleMatch || contentMatch || tagMatch;
+  });
 
   useEffect(() => {
     loadNotes();
@@ -72,11 +85,23 @@ function App() {
 
       <main>
         {currentView === 'list' && (
-          <NoteList 
-            notes={notes} 
-            onView={handleViewNote} 
-            onDelete={handleDelete} 
-          />
+          <>
+            <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', background: 'var(--surface-color)', padding: '0.8rem 1rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+              <FiSearch style={{ color: 'var(--text-secondary)', marginRight: '0.8rem' }} size={20} />
+              <input 
+                type="text" 
+                placeholder="Search notes by title, content, or tags..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                style={{ flex: 1, background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', fontSize: '1rem' }}
+              />
+            </div>
+            <NoteList 
+              notes={filteredNotes} 
+              onView={handleViewNote} 
+              onDelete={handleDelete} 
+            />
+          </>
         )}
         
         {currentView === 'editor' && (
