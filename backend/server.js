@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production' || process.env.RENDER || process.env.V
   app.use(express.static(path.join(__dirname, '../frontend/build')));
 
   // Anything that doesn't match the API routes should be routed to the React app
-  app.get('/(.*)', (req, res) => {
+  app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
   });
 }
