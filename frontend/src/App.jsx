@@ -14,13 +14,16 @@ function App() {
   const filteredNotes = notes.filter(note => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
-    const titleMatch = typeof note.title === 'string' && note.title.toLowerCase().includes(query);
-    const contentMatch = typeof note.content === 'string' && note.content.toLowerCase().includes(query);
-    const tagMatch = note.tags && note.tags.some(tag => 
-      (typeof tag === 'string' && tag.toLowerCase().includes(query)) || 
-      (typeof tag === 'object' && tag.name && tag.name.toLowerCase().includes(query))
-    );
-    return titleMatch || contentMatch || tagMatch;
+    
+    // Check if title is an object (due to malformed DB entries previously) or string
+    let titleStr = '';
+    if (typeof note.title === 'string') {
+      titleStr = note.title;
+    } else if (typeof note.title === 'object') {
+      titleStr = JSON.stringify(note.title);
+    }
+    
+    return titleStr.toLowerCase().includes(query);
   });
 
   useEffect(() => {
@@ -90,7 +93,7 @@ function App() {
               <FiSearch style={{ color: 'var(--text-secondary)', marginRight: '0.8rem' }} size={20} />
               <input 
                 type="text" 
-                placeholder="Search notes by title, content, or tags..." 
+                placeholder="Search notes by title..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{ flex: 1, background: 'transparent', border: 'none', color: 'var(--text-primary)', outline: 'none', fontSize: '1rem' }}
